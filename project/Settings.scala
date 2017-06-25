@@ -15,6 +15,13 @@ object Settings {
     "-Ywarn-inaccessible",
     "-Ywarn-nullary-override",
     "-Ywarn-numeric-widen",
+    "-Ywarn-unused:implicits",
+    "-Ywarn-unused:imports",
+    "-Ywarn-unused:locals",
+    "-Ywarn-unused:params",
+    "-Ywarn-unused:patvars",
+    "-Ywarn-unused:privates",
+    "-Ywarn-value-discard",
     "-language:implicitConversions",
     "-language:higherKinds",
     "-language:existentials",
@@ -22,7 +29,7 @@ object Settings {
   )
 
   val BaseSettings = Seq(
-    scalaVersion := "2.11.11",
+    scalaVersion := "2.12.2",
     scalacOptions := ScalacOpts,
     organization := "net.scalytica",
     licenses += ("MIT", url("http://opensource.org/licenses/MIT")),

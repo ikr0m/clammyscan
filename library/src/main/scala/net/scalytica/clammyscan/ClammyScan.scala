@@ -74,7 +74,7 @@ abstract class BaseScanParser(
     clamConfig.validFilenameRegex.forall(
       regex =>
         regex.r.findFirstMatchIn(decode(filename, Codec.utf_8.charset)) match {
-          case Some(m) => false
+          case Some(_) => false
           case _       => true
       }
     )
@@ -166,7 +166,7 @@ abstract class BaseScanParser(
       err: ClamError
   )(
       remove: => Unit
-  )(implicit ec: ExecutionContext): Future[Either[Result, ClamMultipart[A]]] = {
+  ): Future[Either[Result, ClamMultipart[A]]] = {
     Future.successful {
       err match {
         case vf: VirusFound =>
@@ -297,7 +297,10 @@ class ClammyScanParser @Inject()(
           fio.map(_ => Option(tf))
         }
       },
-      remove = tmpFile => tmpFile.delete()
+      remove = { tmpFile =>
+        if (tmpFile.delete()) cbpLogger.debug(s"File ${tmpFile.path} removed")
+        else cbpLogger.warn(s"Could not remove ${tmpFile.path}")
+      }
     )
 
   def scanOnly(implicit ec: ExecutionContext): ClamParser[Unit] =

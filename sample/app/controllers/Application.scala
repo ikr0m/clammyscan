@@ -28,7 +28,7 @@ class Application @Inject()(
   /**
    * Testing streaming virus scanning of files with no persistence.
    */
-  def scanFile = Action(clammyScan.scanOnly) { request =>
+  def scanFile = Action(clammyScan.scanOnly) { implicit request =>
     request.body.files.head.ref.scanResponse match {
       case vf: VirusFound =>
         NotAcceptable(Json.obj("message" -> vf.message))
