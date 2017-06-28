@@ -18,7 +18,7 @@ class ClammyScanSpec extends ClammyTestContext with TestResources {
       expectedStatusCode: Int,
       expectedBody: Option[String] = None
   )(ctx: Context): Unit = {
-    implicit val mat = ctx.materializer
+    import ctx.materializer
 
     result.header.status mustEqual expectedStatusCode
     expectedBody.foreach { eb =>
@@ -103,8 +103,6 @@ class ClammyScanSpec extends ClammyTestContext with TestResources {
         withScanAction(scanTmpAction) { implicit ctx =>
           val request = fakeReq(eicarFile, None)
           val result  = ctx.awaitResult(request)
-
-          implicit val mat = ctx.materializer
 
           validateResult(result, NOT_ACCEPTABLE, eicarResult)(ctx)
         }

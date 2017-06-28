@@ -1,6 +1,5 @@
 package net.scalytica.clammyscan
 
-import akka.actor.ActorSystem
 import akka.stream.Materializer
 import akka.stream.scaladsl.FileIO
 import com.typesafe.config.ConfigFactory
@@ -31,15 +30,14 @@ trait ClammyTestContext extends WordSpecLike with MustMatchers {
     "logging-filter"               -> "akka.event.slf4j.Slf4jLoggingFilter"
   )
 
-  case class Context(action: EssentialAction)(
-      implicit sys: ActorSystem,
+  case class Context(
+      action: EssentialAction,
       mat: Materializer,
-      tfc: TemporaryFileCreator,
-      pbp: PlayBodyParsers
+      tfc: TemporaryFileCreator
   ) {
 
-    val materializer    = mat
-    val tempFileCreator = tfc
+    implicit val materializer    = mat
+    implicit val tempFileCreator = tfc
 
     def awaitResult[A](
         req: FakeRequest[A]
@@ -68,7 +66,7 @@ trait ClammyTestContext extends WordSpecLike with MustMatchers {
       val pbp        = app.injector.instanceOf[PlayBodyParsers]
       val clammyScan = new ClammyScanParser(sys, mat, tfc, pbp, cfg)
 
-      test(Context(e(clammyScan))(sys, mat, tfc, pbp))
+      test(Context(e(clammyScan), mat, tfc))
     }
   }
 
