@@ -8,7 +8,7 @@ object Settings {
     "-deprecation",
     "-feature",
     "-unchecked",
-    "-Xfatal-warnings",
+//    "-Xfatal-warnings",
     "-Xlint",
     "-Ywarn-adapted-args",
     "-Ywarn-dead-code",

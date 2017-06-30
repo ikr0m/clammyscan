@@ -1,6 +1,7 @@
 import Settings._
 import Dependencies._
 import play.sbt.PlayImport
+import play.sbt.routes.RoutesKeys
 /*
 
     Build script for ClammyScan, a reactive integration with ClamAV.
@@ -22,6 +23,7 @@ lazy val library = ClammyProject("library")
 lazy val sample = ClammyProject("sample")
   .enablePlugins(PlayScala)
   .settings(routesGenerator := InjectedRoutesGenerator)
+  .settings(RoutesKeys.routesImport := Seq.empty)
   .settings(coverageEnabled := false)
   .settings(resolvers += Resolver.mavenLocal)
   .settings(NoPublish)
