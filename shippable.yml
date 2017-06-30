@@ -1,6 +1,6 @@
 language: scala
 scala:
-- 2.11.11
+- 2.12.2
 
 jdk:
 - openjdk8
@@ -11,7 +11,7 @@ env:
 
 build:
   pre_ci_boot:
-    image_name: kpmeen/docker-clammyscan-builder
+    image_name: kpmeen/docker-clammyscan-builder:scala-2.12
     image_tag: latest
     pull: true
     options: "-e HOME=/root"
