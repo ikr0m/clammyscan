@@ -11,8 +11,8 @@ env:
 
 build:
   pre_ci_boot:
-    image_name: kpmeen/docker-clammyscan-builder:scala-2.12
-    image_tag: latest
+    image_name: kpmeen/docker-clammyscan-builder
+    image_tag: scala-2.12
     pull: true
     options: "-e HOME=/root"
 
